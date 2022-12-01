@@ -88,11 +88,18 @@
             <version>2.0.19.graal</version>
         </dependency>
 
-        <!--commons：将大的list切割成多个小的list-->
+        <!--collections4：将大的list切割成多个小的list-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
             <version>4.4</version>
+        </dependency>
+
+        <!--pool2：SpringDataRedis 的对象池-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.11.1</version>
         </dependency>
 
     </dependencies>

@@ -2,6 +2,7 @@ package com.ns4a.dv.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
  * @description: 自选股的部分信息类，含股票代码、股票名称、当前价、历史最高价、历史最低价、自选收益、行业、流通市值
  **/
 @Data
-public class OptionalStockVo {
+public class OptionalStockVo implements Serializable {
 
     /**
      * sc、sn、industry、rmv由OptionalStock中的Stock获取

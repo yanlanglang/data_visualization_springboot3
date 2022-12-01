@@ -7,6 +7,7 @@ import com.ns4a.dv.utils.ResultJsonUtil;
 import com.ns4a.dv.vo.OptionalStockVo;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,9 @@ import java.util.List;
 public class OptionalStockController {
 
     @Autowired
+    private RedisTemplate<String, Object> stringObjectRedisTemplate;
+
+    @Autowired
     private OptionalStockService optionalStockService;
 
     @GetMapping("/index")
@@ -32,14 +36,22 @@ public class OptionalStockController {
     ResultJsonUtil index(HttpSession session) throws Exception {
         Consumer consumer =(Consumer) session.getAttribute("consumer");
         if (consumer != null){
-            //用户是存在的，即他的id也是有的
-            List<OptionalStockVo> optionalStocks =  optionalStockService.findOptionalStockVos(consumer.getId());
-            if (optionalStocks.size() == 0){
+            //redis中有值
+            List<OptionalStockVo> vos = (List<OptionalStockVo>) stringObjectRedisTemplate.opsForValue().get("optionalStockVos");
+            if (vos != null){
+                return ResultJsonUtil.ok(vos);
+            }
+
+            //redis中没有值
+            List<OptionalStockVo> optionalStockVos =  optionalStockService.findOptionalStockVos(consumer.getId());
+            if (optionalStockVos.size() == 0){
                 //自选篮为空
                 return ResultJsonUtil.ok(false);
             }else {
                 //自选篮不为空
-                return ResultJsonUtil.ok(optionalStocks);
+                //存储到redis中
+                stringObjectRedisTemplate.opsForValue().set("optionalStockVos", optionalStockVos);
+                return ResultJsonUtil.ok(optionalStockVos);
             }
         }else {
             return ResultJsonUtil.error("请先登录嗷！");

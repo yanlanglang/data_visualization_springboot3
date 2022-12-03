@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -17,7 +18,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "t_stock_hist")
-public class StockHist {
+public class StockHist implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

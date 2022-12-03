@@ -3,16 +3,17 @@ package com.ns4a.dv.vo;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * @className: RealTimeStock
  * @author: Yan Lang
  * @date: 2022/11/28
- * @description: http://127.0.0.1:8888/api/public/stock_zh_a_spot_em 接口返回的实例
+ * @description: http://127.0.0.1:8888/api/public/stock_zh_a_spot_em 实时数据接口返回的实例
  **/
 @Data
-public class RealTimeStockVo {
+public class RealTimeStockVo implements Serializable {
 
     //序号
     @JSONField(name = "序号")

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "t_stock")
-public class Stock {
+public class Stock implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
